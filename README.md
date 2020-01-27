@@ -9,11 +9,32 @@ composer require klepak/nova-router-link
 ```php
 use Klepak\NovaRouterLink\RouterLink;
 
-RouterLink::make('Process', 'process_id')
+RouterLink::make(__('Process Details'), 'process_id')
     ->route('process-details', [
         'processId' => $this->process_id
-    ]),
+    ]);
 ```
+
+
+```php
+use Klepak\NovaRouterLink\RouterLink;
+use Suenerds\NovaSearchableBelongsToFilter\NovaSearchableBelongsToFilter;
+use App\Nova\Process;
+
+$filters = base64_encode(json_encode([
+    ['class' => NovaSearchableBelongsToFilter::class . '\\Process',
+        'value' => [
+            'display' => $this->title,
+            'value' => $this->id,
+        ]
+    ]
+]));
+
+RouterLink::make(__('Process Filter'), 'process_id')
+    ->route('index', ['resourceName' => Process::uriKey()], ['processes_filter' => $filters]),
+```
+
+
 **Screenshots**  
 ![index](https://raw.githubusercontent.com/klepak/nova-router-link/master/docs/index.png)
 ![details](https://raw.githubusercontent.com/klepak/nova-router-link/master/docs/details.png)
