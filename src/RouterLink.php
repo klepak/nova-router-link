@@ -13,11 +13,12 @@ class RouterLink extends Field
      */
     public $component = 'nova-router-link';
 
-    public function route($name, $params)
+    public function route($name, $params, array $query = null)
     {
         return $this->withMeta([
             'route' => $name,
-            'params' => $params
+            'params' => $params,
+            'query' => $query,
         ]);
     }
 }
